@@ -13,7 +13,7 @@ comes with a LSP for Vim users.
 ## Application 
 
 For api as backend we use [NestJS](https://docs.nestjs.com/)
-And for web as frontend we use [NextJS](https://nextjs.org/)
+and for web as frontend we use [NextJS](https://nextjs.org/)
 
 ## Requirements
 
@@ -25,8 +25,10 @@ This project fully using Typescript as programming language. So makesure install
 
 ## Start the application
 
-Run `npx nx serve api` to start the development server for api app. 
-Run `npx nx serve web` to start the development server for web app. 
+For start all apps can use command `pnpm dev`.\
+Or for start specific apps can use this.\
+Run `pnpm start api` to start the development server for api app.\
+Run `pnpm start web` to start the development server for web app. \
 Happy coding!
 
 <!---
