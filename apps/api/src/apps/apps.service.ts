@@ -2,10 +2,7 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class AppsService {
-  getApps() {
-    return {
-      message: "Welcome to Gaming Platform",
-      time: new Date().getTime(),
-    };
+  getApps(): string {
+    return "Welcome to Gaming Platform v1.0";
   }
 }
