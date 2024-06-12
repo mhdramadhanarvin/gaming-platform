@@ -41,8 +41,8 @@
     },
     "e2e": {
       "cache": true
-    },
-  ,
+    }
+  },
   "plugins": [
     {
       "plugin": "@nx/webpack/plugin",
