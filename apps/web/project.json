@@ -1,0 +1,28 @@
+{
+  "name": "web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/web",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "web:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "web:build:development",
+          "dev": true,
+          "hostname": "127.0.0.1"
+        },
+        "production": {
+          "buildTarget": "web:build:production",
+          "dev": false
+        }
+      }
+    }
+  }
+}
