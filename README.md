@@ -10,10 +10,26 @@ Enhance your Nx experience by installing [Nx Console](https://nx.dev/nx-console)
 provides an interactive UI to view your projects, run tasks, generate code, and more! Available for VSCode, IntelliJ and
 comes with a LSP for Vim users.
 
+## Application 
+
+For api as backend we use [NestJS](https://docs.nestjs.com/)
+And for web as frontend we use [NextJS](https://nextjs.org/)
+
+## Requirements
+
+This project fully using Typescript as programming language. So makesure installed NodeJS before that. 
+
+- [NodeJS 20.14](https://nodejs.org/) including also installed NPM 10.7 
+- [PNPM 9.2](https://pnpm.io/installation#using-npm) for package manager instead of npm to best performance
+- [MySQL]
+
 ## Start the application
 
-Run `npx nx serve api` to start the development server. Happy coding!
+Run `npx nx serve api` to start the development server for api app. 
+Run `npx nx serve web` to start the development server for web app. 
+Happy coding!
 
+<!---
 ## Build for production
 
 Run `npx nx build api` to build the application. The build artifacts are stored in the output directory (e.g. `dist/` or `build/`), ready to be deployed.
@@ -60,3 +76,4 @@ It will show tasks that you can run with Nx.
 - [Join the community](https://nx.dev/community)
 - [Subscribe to the Nx Youtube Channel](https://www.youtube.com/@nxdevtools)
 - [Follow us on Twitter](https://twitter.com/nxdevtools)
+---->
