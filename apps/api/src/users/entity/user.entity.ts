@@ -28,16 +28,17 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   salt: string;
 
+  @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user, {
+    eager: true
+  })
+  refreshTokens: RefreshToken[];
+
   @CreateDateColumn()
   createdAt: string;
 
   @UpdateDateColumn()
   updatedAt: string;
 
-  @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user, {
-    eager: true
-  })
-  refreshTokens: RefreshToken[];
   //
   // @OneToMany(() => Todo, (todo) => todo.user)
   // todos: Todo[];

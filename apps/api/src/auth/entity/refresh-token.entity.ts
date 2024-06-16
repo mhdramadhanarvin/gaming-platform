@@ -1,5 +1,5 @@
 import { User } from "src/users/entity/user.entity";
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class RefreshToken extends BaseEntity {
@@ -14,4 +14,11 @@ export class RefreshToken extends BaseEntity {
 
   @ManyToOne(() => User, (user) => user.refreshTokens)
   user: User;
+
+  @CreateDateColumn()
+  createdAt: string;
+
+  @UpdateDateColumn()
+  updatedAt: string;
+
 }
