@@ -3,12 +3,15 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/api/src",
   "projectType": "application",
+  "tags": [],
   "targets": {
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
+      "cache": true,
       "options": {
-        "buildTarget": "api:build"
+        "buildTarget": "api:build",
+        "watch": true
       },
       "configurations": {
         "development": {

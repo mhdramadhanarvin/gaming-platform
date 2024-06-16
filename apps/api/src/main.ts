@@ -3,18 +3,21 @@
  * This is only a minimal backend to get started.
  */
 
-import { Logger } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 
 import { AppModule } from "./app.module";
 import { TransformInterceptor } from "./interceptors/transform.interceptor";
 import { environment } from "./environments/environment";
+import { useContainer } from "class-validator";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = "api";
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   app.setGlobalPrefix(globalPrefix);
-  app.useGlobalInterceptors(new TransformInterceptor);
+  app.useGlobalInterceptors(new TransformInterceptor());
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
   const port = environment.port || 3000;
   await app.listen(port);
   Logger.log(
