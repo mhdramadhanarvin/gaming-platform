@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { UsersModule } from "./users/users.module";
+import { GameModule } from "./game/game.module";
 import { TypeOrmConfig } from "./config/typeorm.config";
 import { ConfigModule } from "@nestjs/config";
 import { AuthModule } from "./auth/auth.module";
@@ -12,6 +13,7 @@ import { IsUniqueConstraint } from "./shared/is-unique-constrant";
     ConfigModule.forRoot({}),
     TypeOrmConfig,
     UsersModule,
+    GameModule,
     AuthModule,
   ],
   controllers: [AppController],
