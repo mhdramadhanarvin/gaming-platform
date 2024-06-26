@@ -1,7 +1,7 @@
 import { Optional } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, MinLength } from "class-validator";
-import { IsUnique } from "src/shared/is-unique";
+import { IsUnique } from "../../shared/is-unique";
 
 export class CreateUserDto {
   @ApiProperty({ default: "user" })

@@ -13,9 +13,9 @@ import {
   LoginResponse,
   LoginResponseClass,
 } from "./interface/login-response.interface";
-import { JwtGuard } from "src/config/jwt-guard.config";
 import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { RefreshTokenResponseDTO } from "./dto/refresh-token-response.dto";
+import { JwtGuard } from "../config/jwt-guard.config";
 
 @ApiTags("Authentication")
 @Controller("auth")

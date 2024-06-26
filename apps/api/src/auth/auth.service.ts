@@ -11,9 +11,9 @@ import { UsersService } from "../users/users.service";
 import { LoginDto } from "./dto/login.dto";
 import { RefreshAccessTokenDto } from "./dto/refresh-access-token.dto";
 import { LoginResponse } from "./interface/login-response.interface";
-import { User } from "src/users/entity/user.entity";
 import { RefreshToken } from "./entity/refresh-token.entity";
 import { Repository } from "typeorm";
+import { User } from "../users/entity/user.entity";
 
 @Injectable()
 export class AuthService {

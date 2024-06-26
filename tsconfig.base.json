@@ -13,9 +13,10 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "strict": true,
-    "noErrorTruncation": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@gaming-platform/api/users": ["libs/api/users/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

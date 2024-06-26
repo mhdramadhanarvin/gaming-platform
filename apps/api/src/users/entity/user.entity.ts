@@ -9,9 +9,9 @@ import {
 } from "typeorm";
 
 import * as bcrypt from "bcrypt";
-import { RefreshToken } from "src/auth/entity/refresh-token.entity";
 import { ApiProperty } from "@nestjs/swagger";
 import { Exclude } from "class-transformer";
+import { RefreshToken } from "../../auth/entity/refresh-token.entity";
 
 @Entity()
 export class User extends BaseEntity {

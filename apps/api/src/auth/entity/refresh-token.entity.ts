@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { User } from "src/users/entity/user.entity";
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { User } from "../../users/entity/user.entity";
 
 @Entity()
 export class RefreshToken extends BaseEntity {

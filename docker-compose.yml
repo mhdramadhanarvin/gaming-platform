@@ -12,14 +12,6 @@ services:
         MYSQL_ALLOW_EMPTY_PASSWORD: 1
       volumes:
         - 'mysql:/var/lib/mysql'
-      healthcheck:
-        test:
-          - CMD
-          - mysqladmin
-          - ping
-          - '-p password'
-        retries: 3
-        timeout: 5s
 
 volumes:
     mysql:
