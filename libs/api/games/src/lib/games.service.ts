@@ -1,14 +1,14 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { CreateGameDto } from "./dto/create-game.dto";
-import { Games } from "@gaming-platform/api/shared/database/entity";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateGameDto } from './dto/create-game.dto';
+import { Games } from '@gaming-platform/api/shared/database/entity';
 
 @Injectable()
 export class GamesService {
   constructor(
-    @InjectRepository(Games) private readonly gameRepository: Repository<Games>,
-  ) { }
+    @InjectRepository(Games) private readonly gameRepository: Repository<Games>
+  ) {}
 
   async create(createGameDto: CreateGameDto): Promise<Games> {
     const game = this.gameRepository.create(createGameDto);

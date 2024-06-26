@@ -14,6 +14,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "strictPropertyInitialization": false,
     "paths": {
       "@gaming-platform/api/auth": ["libs/api/auth/src/index.ts"],
       "@gaming-platform/api/games": ["libs/api/games/src/index.ts"],

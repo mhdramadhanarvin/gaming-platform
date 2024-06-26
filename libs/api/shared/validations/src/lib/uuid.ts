@@ -1,5 +1,5 @@
-import { BadRequestException, Injectable, PipeTransform } from "@nestjs/common";
-import { isUUID } from "class-validator";
+import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
+import { isUUID } from 'class-validator';
 
 @Injectable()
 export class UUIDValidationPipe implements PipeTransform {

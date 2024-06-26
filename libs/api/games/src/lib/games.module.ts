@@ -1,8 +1,8 @@
-import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { Games } from "@gaming-platform/api/shared/database/entity";
-import { GamesService } from "./games.service";
-import { GamesController } from "./games.controller";
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Games } from '@gaming-platform/api/shared/database/entity';
+import { GamesService } from './games.service';
+import { GamesController } from './games.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Games])],
@@ -10,4 +10,4 @@ import { GamesController } from "./games.controller";
   controllers: [GamesController],
   exports: [GamesService],
 })
-export class GamesModule { }
+export class GamesModule {}

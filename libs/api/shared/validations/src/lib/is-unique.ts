@@ -2,10 +2,10 @@ import {
   ValidationArguments,
   ValidatorConstraint,
   ValidatorConstraintInterface,
-} from "class-validator";
-import { EntityManager } from "typeorm";
-import { Injectable } from "@nestjs/common";
-import { registerDecorator, ValidationOptions } from "class-validator";
+} from 'class-validator';
+import { EntityManager } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { registerDecorator, ValidationOptions } from 'class-validator';
 
 export type IsUniqueConstraintInput = {
   tableName: string;
@@ -14,11 +14,11 @@ export type IsUniqueConstraintInput = {
 
 export function IsUnique(
   options: IsUniqueConstraintInput,
-  validationOptions?: ValidationOptions,
+  validationOptions?: ValidationOptions
 ) {
-  return function(object: any, propertyName: string) {
+  return function (object: any, propertyName: string) {
     registerDecorator({
-      name: "is-unique",
+      name: 'is-unique',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
@@ -28,10 +28,10 @@ export function IsUnique(
   };
 }
 
-@ValidatorConstraint({ name: "IsUniqueConstraint", async: true })
+@ValidatorConstraint({ name: 'IsUniqueConstraint', async: true })
 @Injectable()
 export class IsUniqueConstraint implements ValidatorConstraintInterface {
-  constructor(private readonly entityManager: EntityManager) { }
+  constructor(private readonly entityManager: EntityManager) {}
 
   async validate(value: any, args?: ValidationArguments): Promise<boolean> {
     const { tableName, column }: IsUniqueConstraintInput = args.constraints[0];
@@ -46,6 +46,6 @@ export class IsUniqueConstraint implements ValidatorConstraintInterface {
   }
 
   defaultMessage?(validationArguments?: ValidationArguments): string {
-    return "the record already exist";
+    return 'the record already exist';
   }
 }

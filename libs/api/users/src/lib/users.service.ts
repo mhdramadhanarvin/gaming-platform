@@ -1,15 +1,15 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { User } from "@gaming-platform/api/shared/database/entity";
-import * as bcrypt from "bcrypt";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateUserDto } from './dto/create-user.dto';
+import { User } from '@gaming-platform/api/shared/database/entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private readonly usersRepository: Repository<User>,
-  ) { }
+    @InjectRepository(User) private readonly usersRepository: Repository<User>
+  ) {}
 
   async create(data: Partial<User>): Promise<User> {
     const user = this.usersRepository.create(data);
@@ -23,10 +23,10 @@ export class UsersService {
 
   async findOne(id: string): Promise<User | null> {
     const data = await this.usersRepository.findOneBy({ id });
-    delete data.refreshTokens
-    delete data?.password
+    delete data.refreshTokens;
+    delete data?.password;
 
-    return data
+    return data;
   }
 
   async validateUser(email: string, password: string): Promise<User | null> {

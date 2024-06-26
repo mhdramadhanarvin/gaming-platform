@@ -1,21 +1,21 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsDefined, IsEmail, IsNotEmpty, MinLength } from "class-validator";
-import { IsUnique } from "@gaming-platform/api/shared/validations";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsDefined, IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { IsUnique } from '@gaming-platform/api/shared/validations';
 
 export class SignUpDto {
-  @ApiProperty({ default: "user" })
+  @ApiProperty({ default: 'user' })
   @IsDefined()
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty({ example: "test@example.com" })
+  @ApiProperty({ example: 'test@example.com' })
   @IsDefined()
   @IsNotEmpty()
   @IsEmail()
-  @IsUnique({ tableName: "User", column: "email" })
+  @IsUnique({ tableName: 'User', column: 'email' })
   email: string;
 
-  @ApiProperty({ example: "password" })
+  @ApiProperty({ example: 'password' })
   @IsDefined()
   @IsNotEmpty()
   @MinLength(6)

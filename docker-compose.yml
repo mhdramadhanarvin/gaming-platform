@@ -1,18 +1,18 @@
 services:
-    mysql:
-      image: 'mysql/mysql-server:8.0'
-      ports:
-        - 3306:3306
-      environment:
-        MYSQL_ROOT_PASSWORD: 'password'
-        MYSQL_ROOT_HOST: '%'
-        MYSQL_DATABASE: 'gaming-platform'
-        MYSQL_USER: 'user'
-        MYSQL_PASSWORD: 'password'
-        MYSQL_ALLOW_EMPTY_PASSWORD: 1
-      volumes:
-        - 'mysql:/var/lib/mysql'
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: 'gaming-platform'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - 'mysql:/var/lib/mysql'
 
 volumes:
-    mysql:
-        driver: local
+  mysql:
+    driver: local

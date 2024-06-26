@@ -1,17 +1,17 @@
 import {
-    BaseEntity,
-    Column,
-    CreateDateColumn,
-    Entity,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Games extends BaseEntity {
-  @ApiProperty({ default: "b091a6e9-47b1-48a0-ab8f-9a6e50549046" })
-  @PrimaryGeneratedColumn("uuid")
+  @ApiProperty({ default: 'b091a6e9-47b1-48a0-ab8f-9a6e50549046' })
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ApiProperty({ example: 'Game Name' })

@@ -8,24 +8,24 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
+} from 'typeorm';
 
-import * as bcrypt from "bcrypt";
-import { ApiProperty } from "@nestjs/swagger";
-import { Exclude } from "class-transformer";
-import { RefreshToken } from "./refresh-token.entity";
+import * as bcrypt from 'bcrypt';
+import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
+import { RefreshToken } from './refresh-token.entity';
 
 @Entity()
 export class User extends BaseEntity {
-  @ApiProperty({ default: "b091a6e9-47b1-48a0-ab8f-9a6e50549046" })
-  @PrimaryGeneratedColumn("uuid")
+  @ApiProperty({ default: 'b091a6e9-47b1-48a0-ab8f-9a6e50549046' })
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ApiProperty({ default: "user" })
+  @ApiProperty({ default: 'user' })
   @Column()
   name: string;
 
-  @ApiProperty({ example: "test@example.com" })
+  @ApiProperty({ example: 'test@example.com' })
   @Column({ unique: true })
   email: string;
 
@@ -41,11 +41,11 @@ export class User extends BaseEntity {
   })
   refreshTokens: RefreshToken[];
 
-  @ApiProperty({ example: "2024-06-17T04:59:30.743Z" })
+  @ApiProperty({ example: '2024-06-17T04:59:30.743Z' })
   @CreateDateColumn()
   createdAt: string;
 
-  @ApiProperty({ example: "2024-06-17T04:59:30.743Z" })
+  @ApiProperty({ example: '2024-06-17T04:59:30.743Z' })
   @UpdateDateColumn()
   updatedAt: string;
 

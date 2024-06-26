@@ -10,16 +10,16 @@ Enhance your Nx experience by installing [Nx Console](https://nx.dev/nx-console)
 provides an interactive UI to view your projects, run tasks, generate code, and more! Available for VSCode, IntelliJ and
 comes with a LSP for Vim users.
 
-## Application 
+## Application
 
 For api as backend we use [NestJS](https://docs.nestjs.com/)
 and for web as frontend we use [NextJS](https://nextjs.org/)
 
 ## Requirements
 
-This project fully using Typescript as programming language. So makesure installed NodeJS before that. 
+This project fully using Typescript as programming language. So makesure installed NodeJS before that.
 
-- [NodeJS 20.14](https://nodejs.org/) including also installed NPM 10.7 
+- [NodeJS 20.14](https://nodejs.org/) including also installed NPM 10.7
 - [PNPM 9.2](https://pnpm.io/installation#using-npm) for package manager instead of npm to best performance
 - [MySQL]
 
@@ -44,6 +44,7 @@ For view api documentation in swagger can be access [http://localhost:3000/docs]
 ```sh
 pnpm nx g @nx/nest:library --name=module_name --directory=libs/api/module_name --projectNameAndRootFormat=as-provided
 ```
+
 <!---
 ## Build for production
 

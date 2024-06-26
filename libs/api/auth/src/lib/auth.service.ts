@@ -3,27 +3,27 @@ import {
   InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
-} from "@nestjs/common";
-import { JwtService, TokenExpiredError } from "@nestjs/jwt";
-import { InjectRepository } from "@nestjs/typeorm";
-import { refreshTokenConfig } from "@gaming-platform/api/plugins";
-import { UsersService } from "@gaming-platform/api/users";
-import { LoginDto } from "./dto/login.dto";
-import { RefreshAccessTokenDto } from "./dto/refresh-access-token.dto";
-import { LoginResponse } from "./interface/login-response.interface";
-import { RefreshToken } from "@gaming-platform/api/shared/database/entity";
-import { Repository } from "typeorm";
-import { User } from "@gaming-platform/api/shared/database/entity";
-import { SignUpDto } from "./dto/signup.dto";
+} from '@nestjs/common';
+import { JwtService, TokenExpiredError } from '@nestjs/jwt';
+import { InjectRepository } from '@nestjs/typeorm';
+import { refreshTokenConfig } from '@gaming-platform/api/plugins';
+import { UsersService } from '@gaming-platform/api/users';
+import { LoginDto } from './dto/login.dto';
+import { RefreshAccessTokenDto } from './dto/refresh-access-token.dto';
+import { LoginResponse } from './interface/login-response.interface';
+import { RefreshToken } from '@gaming-platform/api/shared/database/entity';
+import { Repository } from 'typeorm';
+import { User } from '@gaming-platform/api/shared/database/entity';
+import { SignUpDto } from './dto/signup.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
-    @InjectRepository(RefreshToken) private readonly refreshTokenRepository:
-      Repository<RefreshToken>,
-  ) { }
+    @InjectRepository(RefreshToken)
+    private readonly refreshTokenRepository: Repository<RefreshToken>
+  ) {}
 
   async register(signUp: SignUpDto): Promise<User> {
     const user = await this.usersService.create(signUp);
@@ -37,7 +37,7 @@ export class AuthService {
 
     const user = await this.usersService.validateUser(email, password);
     if (!user) {
-      throw new UnauthorizedException("Wrong email or password");
+      throw new UnauthorizedException('Wrong email or password');
     }
 
     const access_token = await this.createAccessToken(user);
@@ -47,7 +47,7 @@ export class AuthService {
   }
 
   async refreshAccessToken(
-    refreshTokenDto: RefreshAccessTokenDto,
+    refreshTokenDto: RefreshAccessTokenDto
   ): Promise<{ access_token: string }> {
     const { refresh_token } = refreshTokenDto;
     const payload = await this.decodeToken(refresh_token);
@@ -62,7 +62,7 @@ export class AuthService {
     });
 
     if (!refreshToken || refreshToken.isRevoked) {
-      throw new UnauthorizedException("Access token is not found");
+      throw new UnauthorizedException('Access token is not found');
     }
 
     const access_token = await this.createAccessToken(refreshToken.user);
@@ -75,9 +75,9 @@ export class AuthService {
       return await this.jwtService.verifyAsync(token);
     } catch (e) {
       if (e instanceof TokenExpiredError) {
-        throw new UnauthorizedException("Refresh token is expired");
+        throw new UnauthorizedException('Refresh token is expired');
       } else {
-        throw new InternalServerErrorException("Failed to decode token");
+        throw new InternalServerErrorException('Failed to decode token');
       }
     }
   }
@@ -102,7 +102,7 @@ export class AuthService {
     refreshToken.expiredAt = expiredAt;
 
     const saveRefreshToken = await this.refreshTokenRepository.save(
-      refreshToken,
+      refreshToken
     );
 
     const payload = {
@@ -110,7 +110,7 @@ export class AuthService {
     };
     const refresh_token = await this.jwtService.signAsync(
       payload,
-      refreshTokenConfig,
+      refreshTokenConfig
     );
     return refresh_token;
   }
@@ -122,7 +122,7 @@ export class AuthService {
     });
 
     if (!refreshToken) {
-      throw new NotFoundException("Refresh token is not found");
+      throw new NotFoundException('Refresh token is not found');
     }
 
     refreshToken.isRevoked = true;
