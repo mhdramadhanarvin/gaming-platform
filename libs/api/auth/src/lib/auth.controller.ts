@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -16,6 +18,8 @@ import {
 import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { RefreshTokenResponseDTO } from "./dto/refresh-token-response.dto";
 import { JwtGuard } from "@gaming-platform/api/plugins";
+import { User } from "@gaming-platform/api/shared/database/entity";
+import { SignUpDto } from "./dto/signup.dto";
 
 @ApiTags("Authentication")
 @Controller("auth")
@@ -32,6 +36,17 @@ export class AuthController {
   })
   async login(@Body() loginDto: LoginDto): Promise<LoginResponse> {
     return this.authService.login(loginDto);
+  }
+
+  @Post('register')
+  @ApiOperation({ summary: "Register" })
+  @ApiOkResponse({
+    description: "Response for Status OK",
+    type: User
+  })
+  @HttpCode(HttpStatus.CREATED)
+  register(@Body() signUp: SignUpDto): Promise<User> {
+    return this.authService.register(signUp);
   }
 
   @Post("refresh-token")

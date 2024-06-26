@@ -14,6 +14,7 @@ import { LoginResponse } from "./interface/login-response.interface";
 import { RefreshToken } from "@gaming-platform/api/shared/database/entity";
 import { Repository } from "typeorm";
 import { User } from "@gaming-platform/api/shared/database/entity";
+import { SignUpDto } from "./dto/signup.dto";
 
 @Injectable()
 export class AuthService {
@@ -23,6 +24,13 @@ export class AuthService {
     @InjectRepository(RefreshToken) private readonly refreshTokenRepository:
       Repository<RefreshToken>,
   ) { }
+
+  async register(signUp: SignUpDto): Promise<User> {
+    const user = await this.usersService.create(signUp);
+    delete user.password;
+
+    return user;
+  }
 
   async login(loginDto: LoginDto): Promise<LoginResponse> {
     const { email, password } = loginDto;

@@ -11,16 +11,8 @@ export class UsersService {
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
   ) { }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const { name, email, password } = createUserDto;
-
-    const user = new User();
-    const salt = await bcrypt.genSalt(10);
-
-    user.name = name;
-    user.email = email;
-    user.salt = salt;
-    user.password = await bcrypt.hash(password, salt);
+  async create(data: Partial<User>): Promise<User> {
+    const user = this.usersRepository.create(data);
 
     return this.usersRepository.save(user);
   }
@@ -29,12 +21,12 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  findOne(id: string): Promise<User | null> {
-    return this.usersRepository.findOneBy({ id });
-  }
+  async findOne(id: string): Promise<User | null> {
+    const data = await this.usersRepository.findOneBy({ id });
+    delete data.refreshTokens
+    delete data?.password
 
-  findOnByEmail(email: string): Promise<User | null> {
-    return this.usersRepository.findOneBy({ email });
+    return data
   }
 
   async validateUser(email: string, password: string): Promise<User | null> {

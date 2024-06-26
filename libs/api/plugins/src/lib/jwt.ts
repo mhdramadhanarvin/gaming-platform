@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { JwtModuleOptions, JwtSignOptions } from '@nestjs/jwt';
+import { Injectable } from "@nestjs/common";
 
 export const jwtConfig: JwtModuleOptions = {
     secret: 'secretwoii',

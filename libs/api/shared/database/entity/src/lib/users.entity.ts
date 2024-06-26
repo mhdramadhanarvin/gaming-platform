@@ -1,5 +1,7 @@
 import {
   BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -31,8 +33,8 @@ export class User extends BaseEntity {
   @Exclude()
   password: string;
 
-  @Column({ nullable: true })
-  salt: string;
+  // @Column({ nullable: true })
+  // salt: string;
 
   @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user, {
     eager: true,
@@ -50,9 +52,16 @@ export class User extends BaseEntity {
   //
   // @OneToMany(() => Todo, (todo) => todo.user)
   // todos: Todo[];
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword(): Promise<void> {
+    const salt = await bcrypt.genSalt();
+    if (!/^\$2[abxy]?\$\d+\$/.test(this.password)) {
+      this.password = await bcrypt.hash(this.password, salt);
+    }
+  }
 
-  async validatePassword(password: string): Promise<boolean> {
-    const hash = await bcrypt.hash(password, this.salt);
-    return hash === this.password;
+  async validatePassword(plainPassword: string): Promise<boolean> {
+    return await bcrypt.compare(plainPassword, this.password);
   }
 }
