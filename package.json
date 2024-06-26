@@ -4,6 +4,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "nx run-many --parallel --target=serve --projects=web,api",
+    "lint:affected": "nx affected --base=remotes/origin/main --target=lint",
+    "build:affected": "nx affected --base=remotes/origin/main --target=build",
+    "test:affected": "nx affected --base=remotes/origin/main --target=test",
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test"
