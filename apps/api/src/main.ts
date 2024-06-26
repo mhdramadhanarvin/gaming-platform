@@ -19,13 +19,15 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalInterceptors(new TransformInterceptor());
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
+
   const config = new DocumentBuilder()
-    .setTitle("Gaming Platform example")
+    .setTitle("Gaming Platform API Docs")
     .setDescription("The Gaming Platform API description")
     .setVersion("1.0")
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("api", app, document);
+  SwaggerModule.setup("docs", app, document);
+
   const port = environment.port || 3000;
   await app.listen(port);
   Logger.log(

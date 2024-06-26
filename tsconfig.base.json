@@ -15,7 +15,19 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@gaming-platform/api/users": ["libs/api/users/src/index.ts"]
+      "@gaming-platform/api/auth": ["libs/api/auth/src/index.ts"],
+      "@gaming-platform/api/games": ["libs/api/games/src/index.ts"],
+      "@gaming-platform/api/plugins": ["libs/api/plugins/src/index.ts"],
+      "@gaming-platform/api/shared/database/entity": [
+        "libs/api/shared/database/entity/src/index.ts"
+      ],
+      "@gaming-platform/api/shared/validations": [
+        "libs/api/shared/validations/src/index.ts"
+      ],
+      "@gaming-platform/api/users": ["libs/api/users/src/index.ts"],
+      "@gaming-platform/error-handling": [
+        "libs/api/error-handling/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
