@@ -25,12 +25,25 @@ This project fully using Typescript as programming language. So makesure install
 
 ## Start the application
 
+Firstly run `pnpm install`.\
+Run mysql server with docker using `docker compose up -d --wait`.\
 For start all apps can use command `pnpm dev`.\
 Or for start specific apps can use this.\
 Run `pnpm start api` to start the development server for api app.\
 Run `pnpm start web` to start the development server for web app. \
 Happy coding!
 
+## API Documentation
+
+For view api documentation in swagger can be access [http://localhost:3000/docs](http://localhost:3000/docs)
+
+## API Development
+
+### Create new api module
+
+```sh
+pnpm nx g @nx/nest:library --name=module_name --directory=libs/api/module_name --projectNameAndRootFormat=as-provided
+```
 <!---
 ## Build for production
 
