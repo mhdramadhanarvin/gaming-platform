@@ -1,0 +1,45 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateUserDto } from './dto/create-user.dto';
+import { User } from '@gaming-platform/api/shared/database/entity';
+import * as bcrypt from 'bcrypt';
+
+@Injectable()
+export class UsersService {
+  constructor(
+    @InjectRepository(User) private readonly usersRepository: Repository<User>
+  ) {}
+
+  async create(data: Partial<User>): Promise<User> {
+    const user = this.usersRepository.create(data);
+
+    return this.usersRepository.save(user);
+  }
+
+  async findAll(): Promise<User[]> {
+    return this.usersRepository.find();
+  }
+
+  async findOne(id: string): Promise<User | null> {
+    const data = await this.usersRepository.findOneBy({ id });
+    delete data.refreshTokens;
+    delete data?.password;
+
+    return data;
+  }
+
+  async validateUser(email: string, password: string): Promise<User | null> {
+    const user = await this.usersRepository.findOneBy({ email });
+
+    if (user && (await user.validatePassword(password))) {
+      return user;
+    }
+
+    return null;
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.usersRepository.delete(id);
+  }
+}
