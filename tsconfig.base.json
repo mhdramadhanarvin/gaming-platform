@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "strictPropertyInitialization": false,
     "paths": {
+      "@gaming-platform/api/account_games": ["libs/api/account_games/src/index.ts"],
       "@gaming-platform/api/auth": ["libs/api/auth/src/index.ts"],
       "@gaming-platform/api/games": ["libs/api/games/src/index.ts"],
       "@gaming-platform/api/plugins": ["libs/api/plugins/src/index.ts"],

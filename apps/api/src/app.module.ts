@@ -7,6 +7,7 @@ import { IsUniqueConstraint } from '@gaming-platform/api/shared/validations';
 import { UsersModule } from '@gaming-platform/api/users';
 import { AuthModule } from '@gaming-platform/api/auth';
 import { GamesModule } from '@gaming-platform/api/games';
+import { AccountGamesModule } from '@gaming-platform/api/account_games';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { GamesModule } from '@gaming-platform/api/games';
     UsersModule,
     AuthModule,
     GamesModule,
+    AccountGamesModule,
   ],
   controllers: [AppController],
   providers: [AppService, IsUniqueConstraint],
