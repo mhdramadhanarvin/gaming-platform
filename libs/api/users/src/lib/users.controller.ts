@@ -8,7 +8,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { GetUser } from './decorators/get-user.decorator';
+import { GetUser } from '@gaming-platform/api/decorators';
 import { UUIDValidationPipe } from '@gaming-platform/api/shared/validations';
 
 @ApiTags('Users')

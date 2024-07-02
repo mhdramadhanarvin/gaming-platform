@@ -1,11 +1,11 @@
 /* eslint-disable */
 export default {
-  displayName: 'account_games',
-  preset: '../../../jest.preset.js',
+  displayName: 'decorators',
+  preset: '../../../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../coverage/libs/api/account_games',
+  coverageDirectory: '../../../../coverage/libs/api/shared/decorators',
 };
