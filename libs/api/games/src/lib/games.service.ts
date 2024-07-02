@@ -22,7 +22,7 @@ export class GamesService {
   async findOne(id: string): Promise<Games> {
     const game = await this.gameRepository.findOne({ where: { id } });
     if (!game) {
-      throw new NotFoundException(`Game with ID ${id} not found`);
+      throw new NotFoundException(`Game not found`);
     }
     return game;
   }
@@ -30,7 +30,7 @@ export class GamesService {
   async remove(id: number): Promise<void> {
     const result = await this.gameRepository.delete(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`Game with ID ${id} not found`);
+      throw new NotFoundException(`Game not found`);
     }
   }
 }

@@ -3,10 +3,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { AccountGames } from './account-games.entity';
 
 @Entity()
 export class Games extends BaseEntity {
@@ -25,6 +27,9 @@ export class Games extends BaseEntity {
   @ApiProperty({ example: 4 })
   @Column()
   max_player: number;
+
+  @OneToMany(() => AccountGames, (accountGames) => accountGames.game)
+  accountGames: AccountGames[];
 
   @ApiProperty({ example: '2024-06-17T04:59:30.743Z' })
   @CreateDateColumn({ type: 'timestamp' })

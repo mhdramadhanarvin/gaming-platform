@@ -14,6 +14,7 @@ import * as bcrypt from 'bcrypt';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { RefreshToken } from './refresh-token.entity';
+import { AccountGames } from './account-games.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -36,10 +37,11 @@ export class User extends BaseEntity {
   // @Column({ nullable: true })
   // salt: string;
 
-  @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user, {
-    eager: true,
-  })
+  @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user)
   refreshTokens: RefreshToken[];
+
+  @OneToMany(() => AccountGames, (accountGames) => accountGames.user)
+  accountGames: AccountGames[];
 
   @ApiProperty({ example: '2024-06-17T04:59:30.743Z' })
   @CreateDateColumn()
