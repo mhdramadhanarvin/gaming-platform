@@ -17,7 +17,7 @@ import { RefreshToken } from './refresh-token.entity';
 import { AccountGames } from './account-games.entity';
 
 @Entity()
-export class User extends BaseEntity {
+export class Users extends BaseEntity {
   @ApiProperty({ default: 'b091a6e9-47b1-48a0-ab8f-9a6e50549046' })
   @PrimaryGeneratedColumn('uuid')
   id: string;

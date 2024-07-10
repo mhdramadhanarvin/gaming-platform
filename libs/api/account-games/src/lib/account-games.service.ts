@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 import { CreateAccountGameDto } from "./dto/create-account-games.dto";
 import {
   AccountGames,
-  User,
+  Users,
 } from "@gaming-platform/api/shared/database/entity";
 import { GamesService } from "@gaming-platform/api/games";
 import { UpdateAccountGameDto } from "./dto/update-account-games.dto";
@@ -19,7 +19,7 @@ export class AccountGamesService {
 
   async create(
     createAccountGameDto: CreateAccountGameDto,
-    user: User,
+    user: Users,
   ): Promise<AccountGames> {
     const { id_player, nickname_player, game_id } = createAccountGameDto;
 
@@ -34,7 +34,7 @@ export class AccountGamesService {
     return await this.accountGameRepository.save(accountGame);
   }
 
-  async findAll(user: User): Promise<AccountGames[]> {
+  async findAll(user: Users): Promise<AccountGames[]> {
     return await this.accountGameRepository.find({
       where: { user: { id: user.id } },
       relations: ["game"],
@@ -54,7 +54,7 @@ export class AccountGamesService {
 
   async findOne(
     id: string,
-    user: User,
+    user: Users,
   ): Promise<AccountGames> {
     const game = await this.accountGameRepository.findOne({
       where: {
@@ -76,12 +76,12 @@ export class AccountGamesService {
   async update(
     id: string,
     updateAccountGameDto: UpdateAccountGameDto,
-    user: User,
+    user: Users,
   ): Promise<AccountGames> {
 
-    const existingUser = await this.findOne(id, user);
+    const existingUsers = await this.findOne(id, user);
     const userData = this.accountGameRepository.merge(
-      existingUser,
+      existingUsers,
       updateAccountGameDto,
     );
 
@@ -93,7 +93,7 @@ export class AccountGamesService {
 
   async remove(
     id: string,
-    user: User,
+    user: Users,
   ): Promise<void> {
     await this.findOne(id, user);
 

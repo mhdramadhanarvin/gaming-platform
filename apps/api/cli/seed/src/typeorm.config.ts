@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { environment } from "../environments/environment";
+import { environment } from "./environments/environment";
 
 @Module({
   imports: [
@@ -12,7 +12,6 @@ import { environment } from "../environments/environment";
         username: environment.database.username,
         password: environment.database.password,
         database: environment.database.dbname,
-        synchronize: true,
         autoLoadEntities: true,
       }),
     }),

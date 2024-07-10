@@ -13,7 +13,7 @@ import { RefreshAccessTokenDto } from './dto/refresh-access-token.dto';
 import { LoginResponse } from './interface/login-response.interface';
 import { RefreshToken } from '@gaming-platform/api/shared/database/entity';
 import { Repository } from 'typeorm';
-import { User } from '@gaming-platform/api/shared/database/entity';
+import { Users } from '@gaming-platform/api/shared/database/entity';
 import { SignUpDto } from './dto/signup.dto';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class AuthService {
     private readonly refreshTokenRepository: Repository<RefreshToken>
   ) {}
 
-  async register(signUp: SignUpDto): Promise<User> {
+  async register(signUp: SignUpDto): Promise<Users> {
     const user = await this.usersService.create(signUp);
     delete user.password;
 
@@ -82,7 +82,7 @@ export class AuthService {
     }
   }
   //
-  async createAccessToken(user: User): Promise<string> {
+  async createAccessToken(user: Users): Promise<string> {
     const payload = {
       sub: user.id,
     };
@@ -91,7 +91,7 @@ export class AuthService {
     return access_token;
   }
   //
-  async createRefreshToken(user: User): Promise<string> {
+  async createRefreshToken(user: Users): Promise<string> {
     const refreshToken = new RefreshToken();
 
     refreshToken.user = user;

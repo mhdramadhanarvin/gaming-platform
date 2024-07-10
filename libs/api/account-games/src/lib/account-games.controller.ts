@@ -11,7 +11,7 @@ import {
 import { CreateAccountGameDto } from "./dto/create-account-games.dto";
 import {
   AccountGames,
-  User,
+  Users,
 } from "@gaming-platform/api/shared/database/entity";
 import {
   ApiBearerAuth,
@@ -40,7 +40,7 @@ export class AccountGamesController {
     type: AccountGames,
   })
   create(
-    @GetUser() user: User,
+    @GetUser() user: Users,
     @Body() CreateAccountGameDto: CreateAccountGameDto,
   ): Promise<AccountGames> {
     return this.gameService.create(CreateAccountGameDto, user);
@@ -52,7 +52,7 @@ export class AccountGamesController {
     description: "Response for Status OK",
     type: [AccountGames],
   })
-  findAll(@GetUser() user: User): Promise<AccountGames[]> {
+  findAll(@GetUser() user: Users): Promise<AccountGames[]> {
     return this.gameService.findAll(user);
   }
 
@@ -63,7 +63,7 @@ export class AccountGamesController {
     type: AccountGames,
   })
   findOne(
-    @GetUser() user: User,
+    @GetUser() user: Users,
     @Param("id", UUIDValidationPipe) id: string,
   ): Promise<AccountGames> {
     return this.gameService.findOne(id, user);
@@ -71,7 +71,7 @@ export class AccountGamesController {
 
   @Patch(":id")
   async update(
-    @GetUser() user: User,
+    @GetUser() user: Users,
     @Param("id", UUIDValidationPipe) id: string,
     @Body() UpdateAccountGameDto: UpdateAccountGameDto,
   ) {
@@ -88,7 +88,7 @@ export class AccountGamesController {
     description: "Response for Status OK",
   })
   remove(
-    @GetUser() user: User,
+    @GetUser() user: Users,
     @Param("id", UUIDValidationPipe) id: string,
   ): Promise<void> {
     return this.gameService.remove(id, user);

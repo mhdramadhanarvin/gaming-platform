@@ -8,7 +8,7 @@ import {
     UpdateDateColumn,
   } from 'typeorm';
   import { ApiProperty } from '@nestjs/swagger';
-import { User } from './users.entity';
+import { Users } from './users.entity';
 import { Games } from './games.entity';
 
   @Entity()
@@ -18,8 +18,8 @@ import { Games } from './games.entity';
     id: string;
 
     @ApiProperty({ example: 'user-id' })
-    @ManyToOne(() => User, (user) => user.accountGames)
-    user: User;
+    @ManyToOne(() => Users, (user) => user.accountGames)
+    user: Users;
 
     @ApiProperty({ example: 'game_id' })
     @ManyToOne(() => Games, (game) => game.accountGames)
