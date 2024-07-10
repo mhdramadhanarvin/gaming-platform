@@ -1,0 +1,49 @@
+{
+  "name": "api-cli-seed",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api/cli/seed/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/api/cli/seed",
+        "main": "apps/api/cli/seed/src/main.ts",
+        "tsConfig": "apps/api/cli/seed/tsconfig.app.json",
+        "assets": ["apps/api/cli/seed/src/assets"],
+        "webpackConfig": "apps/api/cli/seed/webpack.config.js",
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "api-cli-seed:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "api-cli-seed:build:development"
+        },
+        "production": {
+          "buildTarget": "api-cli-seed:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/api/cli/seed/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

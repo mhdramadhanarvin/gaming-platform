@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+
+migrate() {
+  nx build api-database-migrations && \
+    env-cmd -f .env.example node dist/libs/api/database/migrations/src/index.js "$1"
+}
+
+migrate_seed() {
+  nx build api-cli-seed && \
+    env-cmd -f .env node dist/apps/api/cli/seed/main.js
+}
+
+case "$1" in
+  'create')
+    filename=libs/api/database/migrations/src/migrations/$(date '+%Y%m%d%H%M%S')_$2.ts
+    touch "$filename"
+    echo "Created migration file! $filename"
+    ;;
+  # 'ci')
+  #   case $2 in
+  #     'latest')
+  #       migrate_ci "$2"
+  #       ;;
+  #     'rollback')
+  #       migrate_ci "$2"
+  #       ;;
+  #     'seed')
+  #       migrate_seed_ci
+  #       ;;
+  #   esac
+  #   ;;
+  'latest')
+    migrate "$1"
+    ;;
+  'rollback')
+    migrate "$1"
+    ;;
+  'seed')
+    migrate_seed
+    ;;
+  'seed-prod')
+    migrate_seed_prod
+    ;;
+  'refresh')
+    migrate rollback && migrate latest && migrate_seed
+    ;;
+  *)
+    echo "Usage: $0 { create table_name | latest | rollback | seed | refresh }"
+    ;;
+esac
