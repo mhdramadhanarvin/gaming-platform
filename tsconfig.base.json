@@ -16,9 +16,6 @@
     "baseUrl": ".",
     "strictPropertyInitialization": false,
     "paths": {
-      "@gaming-platform/apps/api": [
-        "apps/api/src/index.ts"
-      ],
       "@gaming-platform/api/account-games": [
         "libs/api/account-games/src/index.ts"
       ],
