@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from './users.entity';
+import { Users } from './users.entity';
 
 @Entity()
 export class RefreshToken extends BaseEntity {
@@ -24,8 +24,8 @@ export class RefreshToken extends BaseEntity {
   @Column()
   expiredAt: Date;
 
-  @ManyToOne(() => User, (user) => user.refreshTokens)
-  user: User;
+  @ManyToOne(() => Users, (user) => user.refreshTokens)
+  user: Users;
 
   @ApiProperty({ example: '2024-06-17T04:59:30.743Z' })
   @CreateDateColumn()

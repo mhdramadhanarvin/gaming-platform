@@ -1,5 +1,5 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
-import { User } from '@gaming-platform/api/shared/database/entity';
+import { Users } from '@gaming-platform/api/shared/database/entity';
 import { UsersService } from './users.service';
 import { JwtGuard } from '@gaming-platform/api/plugins';
 import {
@@ -22,13 +22,13 @@ export class UsersController {
   @ApiOperation({ summary: 'Get User By ID' })
   @ApiOkResponse({
     description: 'Response for Status OK',
-    type: User,
+    type: Users,
   })
   findOne(
-    @GetUser() user: User,
+    @GetUser() user: Users,
     @Param('id', UUIDValidationPipe) id: string
-  ): Promise<User | null> {
-    if (user.id !== id) return null;
+  ): Promise<Users | null> {
+    if (user.id !== id) return Promise.resolve(null);
 
     return this.usersService.findOne(id);
   }
