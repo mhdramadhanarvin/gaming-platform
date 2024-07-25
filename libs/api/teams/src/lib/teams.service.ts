@@ -27,8 +27,6 @@ export class TeamsService {
     ) private readonly teamMembersService: TeamMembersService,
     private dataSource: DataSource,
     @InjectRepository(Teams) private readonly teamRepository: Repository<Teams>,
-    // @InjectRepository(TeamMembers) private readonly teamMemberRepository:
-    //   Repository<TeamMembers>,
   ) { }
 
   getRepository() {
