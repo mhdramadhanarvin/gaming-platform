@@ -4,12 +4,14 @@ import {
     CreateDateColumn,
     Entity,
     ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
   } from 'typeorm';
   import { ApiProperty } from '@nestjs/swagger';
 import { Users } from './users.entity';
 import { Games } from './games.entity';
+import { TeamMembers } from './team-members.entity';
 
   @Entity()
   export class AccountGames extends BaseEntity {
@@ -32,6 +34,9 @@ import { Games } from './games.entity';
     @ApiProperty({ example: 'id_player'})
     @Column()
     id_player:string;
+
+    @OneToMany(() => TeamMembers, (teamMembers) => teamMembers.accountGames)
+    teamMembers: TeamMembers[];
 
     @ApiProperty({ example: '2024-06-17T04:59:30.743Z' })
     @CreateDateColumn({ type: 'timestamp' })

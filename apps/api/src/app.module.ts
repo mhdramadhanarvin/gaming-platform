@@ -9,6 +9,7 @@ import { AuthModule } from '@gaming-platform/api/auth';
 import { GamesModule } from '@gaming-platform/api/games';
 import { AccountGamesModule } from '@gaming-platform/api/account-games';
 import { TeamsModule } from '@gaming-platform/api/teams';
+import { TeamMembersModule } from '@gaming-platform/api/team-members';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TeamsModule } from '@gaming-platform/api/teams';
     AuthModule,
     GamesModule,
     AccountGamesModule,
+    TeamMembersModule,
     TeamsModule,
   ],
   controllers: [AppController],
