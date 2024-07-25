@@ -34,7 +34,8 @@
       "@gaming-platform/api/users": ["libs/api/users/src/index.ts"],
       "@gaming-platform/error-handling": [
         "libs/api/error-handling/src/index.ts"
-      ]
+      ],
+      "@gaming-platform/api/teams": ["libs/api/teams/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

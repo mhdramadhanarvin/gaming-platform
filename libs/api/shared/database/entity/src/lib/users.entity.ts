@@ -45,11 +45,11 @@ export class Users extends BaseEntity {
 
   @ApiProperty({ example: '2024-06-17T04:59:30.743Z' })
   @CreateDateColumn()
-  createdAt: string;
+  created_at: string;
 
   @ApiProperty({ example: '2024-06-17T04:59:30.743Z' })
   @UpdateDateColumn()
-  updatedAt: string;
+  updated_at: string;
 
   //
   // @OneToMany(() => Todo, (todo) => todo.user)
