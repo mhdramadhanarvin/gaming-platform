@@ -14,16 +14,10 @@ export class TeamsService {
   ) { }
 
   async create(createTeamDto: CreateTeamDto): Promise<Teams> {
-    const { team_name, logo, game_id, type } = createTeamDto;
+    const { game_id } = createTeamDto;
     const game = await this.gamesService.findOne(game_id);
 
-    const team = new Teams();
-    team.team_name = team_name;
-    team.logo = logo;
-    team.game = game;
-    team.type = type;
-
-    return await this.teamRepository.save(team);
+    return await this.teamRepository.save({ ...createTeamDto, game });
   }
 
   async findAll(): Promise<Teams[]> {

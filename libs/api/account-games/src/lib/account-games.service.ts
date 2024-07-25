@@ -21,17 +21,11 @@ export class AccountGamesService {
     createAccountGameDto: CreateAccountGameDto,
     user: Users,
   ): Promise<AccountGames> {
-    const { id_player, nickname_player, game_id } = createAccountGameDto;
+    const { game_id } = createAccountGameDto;
 
     const game = await this.gamesService.findOne(game_id);
 
-    const accountGame = new AccountGames();
-    accountGame.nickname_player = nickname_player;
-    accountGame.id_player = id_player;
-    accountGame.user = user;
-    accountGame.game = game;
-
-    return await this.accountGameRepository.save(accountGame);
+    return await this.accountGameRepository.save({ ...createAccountGameDto, user, game });
   }
 
   async findAll(user: Users): Promise<AccountGames[]> {
