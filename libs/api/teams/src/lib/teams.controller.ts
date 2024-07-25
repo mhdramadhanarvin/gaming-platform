@@ -40,7 +40,7 @@ export class TeamsController {
     @GetUser() user: Users,
     @Body() createTeamDto: CreateTeamDto,
   ): Promise<Teams> {
-    return this.teamService.create(createTeamDto);
+    return this.teamService.create(createTeamDto, user);
   }
 
   @Get()

@@ -1,23 +1,71 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { Teams, Users } from "@gaming-platform/api/shared/database/entity";
+import { DataSource, Repository } from "typeorm";
+import {
+  TeamMembers,
+  TeamMemberType,
+  Teams,
+  Users,
+} from "@gaming-platform/api/shared/database/entity";
 import { CreateTeamDto } from "./dto/create-team.dto";
 import { UpdateTeamDro } from "./dto/update-team.dto";
 import { GamesService } from "@gaming-platform/api/games";
+import { TeamMembersService } from "@gaming-platform/api/team-members";
+import { CreateTeamMemberDto } from "libs/api/team-members/src/lib/dto/create-team-member.dto";
 
 @Injectable()
 export class TeamsService {
   constructor(
     private readonly gamesService: GamesService,
+    @Inject(
+      forwardRef(() => TeamMembersService),
+    ) private readonly teamMembersService: TeamMembersService,
+    private dataSource: DataSource,
     @InjectRepository(Teams) private readonly teamRepository: Repository<Teams>,
   ) { }
 
-  async create(createTeamDto: CreateTeamDto): Promise<Teams> {
-    const { game_id } = createTeamDto;
-    const game = await this.gamesService.findOne(game_id);
+  getRepository() {
+    return this.teamRepository;
+  }
 
-    return await this.teamRepository.save({ ...createTeamDto, game });
+  async create(
+    createTeamDto: CreateTeamDto,
+    user: Users,
+  ): Promise<Teams> {
+    try {
+      return await this.dataSource.transaction(async (trx) => {
+        const { game_id, account_game_id } = createTeamDto;
+        const game = await this.gamesService.findOne(game_id);
+
+        const team = await trx.withRepository(this.teamRepository).save({
+          ...createTeamDto,
+          game,
+        });
+
+        const teamMember = new CreateTeamMemberDto();
+        teamMember.team_id = team.id;
+        teamMember.account_game_id = account_game_id;
+        teamMember.game_id = game_id;
+        teamMember.is_leader = true;
+        teamMember.type = TeamMemberType.CORE;
+
+        const teamMemberEntity = await this.teamMembersService.createLogic(
+          teamMember,
+          user,
+          trx,
+        );
+
+        await trx.getRepository(TeamMembers).save(teamMemberEntity);
+        return team;
+      });
+    } catch (e: any) {
+      throw e;
+    }
   }
 
   async findAll(): Promise<Teams[]> {

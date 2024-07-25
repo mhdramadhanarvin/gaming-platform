@@ -4,11 +4,13 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Games } from "./games.entity";
+import { TeamMembers } from "./team-members.entity";
 
 export enum TeamType {
     PUBLIC = "public",
@@ -40,6 +42,9 @@ export class Teams extends BaseEntity {
   @ApiProperty({ example: "game_id" })
   @ManyToOne(() => Games, (game) => game.teams)
   game: Games;
+
+  @OneToMany(() => TeamMembers, (teamMembers) => teamMembers.accountGames)
+  teamMembers: TeamMembers[];
 
   @ApiProperty({ example: "2024-06-17T04:59:30.743Z" })
   @CreateDateColumn({ type: "timestamp" })

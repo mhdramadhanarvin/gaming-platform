@@ -3,3 +3,4 @@ export * from './lib/refresh-token.entity';
 export * from './lib/games.entity';
 export * from './lib/account-games.entity';
 export * from './lib/teams.entity';
+export * from './lib/team-members.entity';
