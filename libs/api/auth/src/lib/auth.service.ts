@@ -29,7 +29,7 @@ export class AuthService {
   async register(signUp: SignUpDto): Promise<Users> {
     const user = await this.usersService.create(signUp);
 
-    return maskedUser(user);
+    return user;
   }
 
   async login(loginDto: LoginDto): Promise<LoginResponse> {

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Users } from '@gaming-platform/api/shared/database/entity';
+import { maskedUser } from '@gaming-platform/api/decorators';
 
 @Injectable()
 export class UsersService {
@@ -10,9 +11,9 @@ export class UsersService {
   ) {}
 
   async create(data: Partial<Users>): Promise<Users> {
-    const user = await this.usersRepository.save(data);
-
-    return this.usersRepository.create(user);
+    const user = this.usersRepository.create(data);
+    const insertedUser = await this.usersRepository.save(user);
+    return maskedUser(insertedUser);
   }
 
   async findAll(): Promise<Users[]> {
