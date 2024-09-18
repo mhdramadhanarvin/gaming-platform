@@ -15,6 +15,7 @@ import { RefreshToken } from '@gaming-platform/api/shared/database/entity';
 import { Repository } from 'typeorm';
 import { Users } from '@gaming-platform/api/shared/database/entity';
 import { SignUpDto } from './dto/signup.dto';
+import { maskedUser } from '@gaming-platform/api/decorators';
 
 @Injectable()
 export class AuthService {
@@ -27,9 +28,8 @@ export class AuthService {
 
   async register(signUp: SignUpDto): Promise<Users> {
     const user = await this.usersService.create(signUp);
-    delete user.password;
 
-    return user;
+    return maskedUser(user);
   }
 
   async login(loginDto: LoginDto): Promise<LoginResponse> {
