@@ -1,4 +1,5 @@
 import {
+  AfterLoad,
   BaseEntity,
   BeforeInsert,
   BeforeUpdate,
@@ -69,5 +70,10 @@ export class Users extends BaseEntity {
 
   async validatePassword(plainPassword: string): Promise<boolean> {
     return await bcrypt.compare(plainPassword, this.password);
+  }
+
+  @AfterLoad()
+  maskedPassword() {
+    this.password = 'xxx';
   }
 }
