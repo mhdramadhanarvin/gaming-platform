@@ -15,7 +15,6 @@ import { RefreshToken } from '@gaming-platform/api/shared/database/entity';
 import { Repository } from 'typeorm';
 import { Users } from '@gaming-platform/api/shared/database/entity';
 import { SignUpDto } from './dto/signup.dto';
-import { maskedUser } from '@gaming-platform/api/decorators';
 
 @Injectable()
 export class AuthService {
