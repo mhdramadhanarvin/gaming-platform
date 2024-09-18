@@ -43,7 +43,7 @@ export class Teams extends BaseEntity {
   @ManyToOne(() => Games, (game) => game.teams)
   game: Games;
 
-  @OneToMany(() => TeamMembers, (teamMembers) => teamMembers.accountGame)
+  @OneToMany(() => TeamMembers, (teamMembers) => teamMembers.team)
   teamMembers: TeamMembers[];
 
   @ApiProperty({ example: '2024-06-17T04:59:30.743Z' })

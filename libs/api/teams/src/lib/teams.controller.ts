@@ -49,8 +49,20 @@ export class TeamsController {
     description: 'Response for Status OK',
     type: [Teams],
   })
-  findAll(@GetUser() user: Users): Promise<Teams[]> {
-    return this.teamService.findAll(user);
+  findAll(): Promise<Teams[]> {
+    return this.teamService.findAll();
+  }
+
+  @Get('/me')
+  @UseGuards(JwtGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get My Teams' })
+  @ApiOkResponse({
+    description: 'Response for Status OK',
+    type: [Teams],
+  })
+  findAllMe(@GetUser() user: Users): Promise<Teams[]> {
+    return this.teamService.findAllMe(user);
   }
 
   @Get(':id')

@@ -8,6 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityManager, Repository } from 'typeorm';
 import {
+  Games,
   TeamMembers,
   Teams,
   Users,
@@ -118,5 +119,20 @@ export class TeamMembersService {
     if (result.affected === 0) {
       throw new NotFoundException(`Team not found`);
     }
+  }
+
+  async hasTeam(game: Games, user: Users): Promise<boolean> {
+    const count = await this.teamMemberRepository.count({
+      where: {
+        game: {
+          id: game.id,
+        },
+        user: {
+          id: user.id,
+        },
+      },
+    });
+
+    return count > 0 ? true : false;
   }
 }

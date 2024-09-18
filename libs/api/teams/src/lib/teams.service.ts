@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
@@ -30,10 +31,6 @@ export class TeamsService {
     @InjectRepository(Teams) private readonly teamRepository: Repository<Teams>
   ) {}
 
-  getRepository() {
-    return this.teamRepository;
-  }
-
   async create(createTeamDto: CreateTeamDto, user: Users): Promise<Teams> {
     try {
       return await this.databaseService.runInTransaction(async (trx) => {
@@ -44,6 +41,9 @@ export class TeamsService {
           account_game_id,
           user
         );
+
+        const hasTeam = await this.teamMembersService.hasTeam(game, user);
+        if (hasTeam) throw new BadRequestException('Alread has team');
 
         const team = await trx.manager.getRepository(Teams).save({
           ...createTeamDto,
@@ -67,14 +67,20 @@ export class TeamsService {
     }
   }
 
-  async findAll(user: Users): Promise<Teams[]> {
-    //this.teamMembersService.findAll();
-    //return await this.teamRepository.find();
-    return this.databaseService.getRepository(Teams).find({
-      relations: { teamMembers: true },
+  async findAll(): Promise<Teams[]> {
+    return await this.teamRepository.find();
+  }
+
+  async findAllMe(user: Users): Promise<Teams[]> {
+    return await this.teamRepository.find({
+      relations: {
+        teamMembers: true,
+      },
       where: {
         teamMembers: {
-          user,
+          user: {
+            id: user.id,
+          },
         },
       },
     });
