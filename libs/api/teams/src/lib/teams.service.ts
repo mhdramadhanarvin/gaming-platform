@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import {
   TeamMembers,
   TeamMemberType,
@@ -74,7 +74,9 @@ export class TeamsService {
   async findAllMe(user: Users): Promise<Teams[]> {
     return await this.teamRepository.find({
       relations: {
-        teamMembers: true,
+        teamMembers: {
+          accountGame: true,
+        },
       },
       where: {
         teamMembers: {
@@ -87,7 +89,14 @@ export class TeamsService {
   }
 
   async findOne(id: string): Promise<Teams> {
-    const team = await this.teamRepository.findOne({ where: { id } });
+    const team = await this.teamRepository.findOne({
+      relations: {
+        teamMembers: {
+          accountGame: true,
+        },
+      },
+      where: { id },
+    });
     if (!team) {
       throw new NotFoundException(`Team not found`);
     }
@@ -107,9 +116,9 @@ export class TeamsService {
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.teamRepository.delete(id);
-    if (result.affected === 0) {
-      throw new NotFoundException(`Team not found`);
-    }
+    //const result = await this.teamRepository.delete(id);
+    //if (result.affected === 0) {
+    //  throw new NotFoundException(`Team not found`);
+    //}
   }
 }
