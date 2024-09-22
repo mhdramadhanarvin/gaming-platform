@@ -1,4 +1,10 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import { Users } from '@gaming-platform/api/shared/database/entity';
 import { UsersService } from './users.service';
 import { JwtGuard } from '@gaming-platform/api/plugins';
@@ -28,7 +34,7 @@ export class UsersController {
     @GetUser() user: Users,
     @Param('id', UUIDValidationPipe) id: string
   ): Promise<Users | null> {
-    if (user.id !== id) return Promise.resolve(null);
+    if (user.id !== id) throw new UnauthorizedException();
 
     return this.usersService.findOne(id);
   }

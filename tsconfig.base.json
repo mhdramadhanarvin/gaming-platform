@@ -31,9 +31,14 @@
       "@gaming-platform/api/shared/validations": [
         "libs/api/shared/validations/src/index.ts"
       ],
+      "@gaming-platform/api/team-members": [
+        "libs/api/team-members/src/index.ts"
+      ],
       "@gaming-platform/api/teams": ["libs/api/teams/src/index.ts"],
-      "@gaming-platform/api/team-members": ["libs/api/team-members/src/index.ts"],
       "@gaming-platform/api/users": ["libs/api/users/src/index.ts"],
+      "@gaming-platform/api/shared/database": [
+        "libs/api/shared/database/src/index.ts"
+      ],
       "@gaming-platform/error-handling": [
         "libs/api/error-handling/src/index.ts"
       ]

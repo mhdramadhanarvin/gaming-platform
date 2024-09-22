@@ -15,12 +15,13 @@
         "main": "apps/api/cli/seed/src/main.ts",
         "tsConfig": "apps/api/cli/seed/tsconfig.app.json",
         "assets": ["apps/api/cli/seed/src/assets"],
-        "webpackConfig": "apps/api/cli/seed/webpack.config.js",
+        "webpackConfig": "apps/api/cli/seed/webpack.config.js"
       },
       "configurations": {
         "development": {},
         "production": {}
-      }
+      },
+      "cache": false
     },
     "serve": {
       "executor": "@nx/js:node",

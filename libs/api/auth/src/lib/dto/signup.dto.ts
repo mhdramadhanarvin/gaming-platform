@@ -12,7 +12,7 @@ export class SignUpDto {
   @IsDefined()
   @IsNotEmpty()
   @IsEmail()
-  @IsUnique({ tableName: 'User', column: 'email' })
+  @IsUnique({ tableName: 'Users', column: 'email' })
   email: string;
 
   @ApiProperty({ example: 'password' })

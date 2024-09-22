@@ -1,4 +1,5 @@
 import {
+  AfterLoad,
   BaseEntity,
   BeforeInsert,
   BeforeUpdate,
@@ -15,6 +16,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { RefreshToken } from './refresh-token.entity';
 import { AccountGames } from './account-games.entity';
+import { TeamMembers } from './team-members.entity';
 
 @Entity()
 export class Users extends BaseEntity {
@@ -42,6 +44,9 @@ export class Users extends BaseEntity {
 
   @OneToMany(() => AccountGames, (accountGames) => accountGames.user)
   accountGames: AccountGames[];
+
+  @OneToMany(() => TeamMembers, (teamMembers) => teamMembers.user)
+  teamMembers: TeamMembers[];
 
   @ApiProperty({ example: '2024-06-17T04:59:30.743Z' })
   @CreateDateColumn()

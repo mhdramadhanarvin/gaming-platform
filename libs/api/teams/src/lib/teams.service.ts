@@ -1,66 +1,65 @@
 import {
+  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
   NotFoundException,
-} from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { DataSource, Repository } from "typeorm";
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import {
   TeamMembers,
   TeamMemberType,
   Teams,
   Users,
-} from "@gaming-platform/api/shared/database/entity";
-import { CreateTeamDto } from "./dto/create-team.dto";
-import { UpdateTeamDro } from "./dto/update-team.dto";
-import { GamesService } from "@gaming-platform/api/games";
-import { TeamMembersService } from "@gaming-platform/api/team-members";
-import { CreateTeamMemberDto } from "libs/api/team-members/src/lib/dto/create-team-member.dto";
+} from '@gaming-platform/api/shared/database/entity';
+import { CreateTeamDto } from './dto/create-team.dto';
+import { UpdateTeamDro } from './dto/update-team.dto';
+import { GamesService } from '@gaming-platform/api/games';
+import { TeamMembersService } from '@gaming-platform/api/team-members';
+import { AccountGamesService } from '@gaming-platform/api/account-games';
+import { DatabaseService } from '@gaming-platform/api/shared/database';
 
 @Injectable()
 export class TeamsService {
   constructor(
     private readonly gamesService: GamesService,
-    @Inject(
-      forwardRef(() => TeamMembersService),
-    ) private readonly teamMembersService: TeamMembersService,
-    private dataSource: DataSource,
-    @InjectRepository(Teams) private readonly teamRepository: Repository<Teams>,
-  ) { }
+    private readonly accountGamesService: AccountGamesService,
+    @Inject(forwardRef(() => TeamMembersService))
+    private readonly teamMembersService: TeamMembersService,
+    private readonly databaseService: DatabaseService,
+    @InjectRepository(Teams) private readonly teamRepository: Repository<Teams>
+  ) {}
 
-  getRepository() {
-    return this.teamRepository;
-  }
-
-  async create(
-    createTeamDto: CreateTeamDto,
-    user: Users,
-  ): Promise<Teams> {
+  async create(createTeamDto: CreateTeamDto, user: Users): Promise<Teams> {
     try {
-      return await this.dataSource.transaction(async (trx) => {
+      return await this.databaseService.runInTransaction(async (trx) => {
         const { game_id, account_game_id } = createTeamDto;
+
         const game = await this.gamesService.findOne(game_id);
-
-        const team = await trx.withRepository(this.teamRepository).save({
-          ...createTeamDto,
-          game,
-        });
-
-        const teamMember = new CreateTeamMemberDto();
-        teamMember.team_id = team.id;
-        teamMember.account_game_id = account_game_id;
-        teamMember.game_id = game_id;
-        teamMember.is_leader = true;
-        teamMember.type = TeamMemberType.CORE;
-
-        const teamMemberEntity = await this.teamMembersService.createLogic(
-          teamMember,
-          user,
-          trx,
+        const accountGame = await this.accountGamesService.findOne(
+          account_game_id,
+          user
         );
 
-        await trx.getRepository(TeamMembers).save(teamMemberEntity);
+        const hasTeam = await this.teamMembersService.hasTeam(game, user);
+        if (hasTeam) throw new BadRequestException('Alread has team');
+
+        const team = await trx.manager.getRepository(Teams).save({
+          ...createTeamDto,
+          game,
+          account_game_id: accountGame,
+        });
+
+        await trx.manager.getRepository(TeamMembers).save({
+          team,
+          accountGame,
+          game,
+          user,
+          is_leader: true,
+          type: TeamMemberType.CORE,
+        });
+
         return team;
       });
     } catch (e: any) {
@@ -72,8 +71,32 @@ export class TeamsService {
     return await this.teamRepository.find();
   }
 
+  async findAllMe(user: Users): Promise<Teams[]> {
+    return await this.teamRepository.find({
+      relations: {
+        teamMembers: {
+          accountGame: true,
+        },
+      },
+      where: {
+        teamMembers: {
+          user: {
+            id: user.id,
+          },
+        },
+      },
+    });
+  }
+
   async findOne(id: string): Promise<Teams> {
-    const team = await this.teamRepository.findOne({ where: { id } });
+    const team = await this.teamRepository.findOne({
+      relations: {
+        teamMembers: {
+          accountGame: true,
+        },
+      },
+      where: { id },
+    });
     if (!team) {
       throw new NotFoundException(`Team not found`);
     }
@@ -83,24 +106,19 @@ export class TeamsService {
   async update(
     id: string,
     updateTeamDto: UpdateTeamDro,
-    user: Users,
+    user: Users
   ): Promise<Teams> {
     const existingTeam = await this.findOne(id);
-    const teamData = this.teamRepository.merge(
-      existingTeam,
-      updateTeamDto,
-    );
+    const teamData = this.teamRepository.merge(existingTeam, updateTeamDto);
 
     // TODO : add validation the team related hasn't joined on going tournament
-    return await this.teamRepository.save(
-      teamData,
-    );
+    return await this.teamRepository.save(teamData);
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.teamRepository.delete(id);
-    if (result.affected === 0) {
-      throw new NotFoundException(`Team not found`);
-    }
+    //const result = await this.teamRepository.delete(id);
+    //if (result.affected === 0) {
+    //  throw new NotFoundException(`Team not found`);
+    //}
   }
 }

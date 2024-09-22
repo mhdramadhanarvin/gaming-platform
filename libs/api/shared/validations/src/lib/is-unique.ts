@@ -46,6 +46,7 @@ export class IsUniqueConstraint implements ValidatorConstraintInterface {
   }
 
   defaultMessage?(validationArguments?: ValidationArguments): string {
-    return 'the record already exist';
+    const column_name = validationArguments.constraints[0]['column'];
+    return `the record ${column_name} already exist`;
   }
 }
